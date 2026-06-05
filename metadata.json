@@ -1,0 +1,6 @@
+{
+  "name": "Restoran MBG",
+  "description": "Premium Indonesian restaurant digital storefront, food menu explorer, and real-time online ordering system.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
