@@ -7,6 +7,7 @@ import PriceTable from './components/PriceTable';
 import Features from './components/Features';
 import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
+import CTASection from './components/CTASection';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
 
@@ -26,6 +27,7 @@ function App() {
       <Features />
       <Testimonials />
       <Contact />
+      <CTASection />
       <Footer />
       <WhatsAppButton />
     </div>

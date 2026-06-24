@@ -1,156 +1,156 @@
-import { ArrowRight, Play } from 'lucide-react';
+import { ArrowRight, ChevronDown, Star, Shield, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Hero = () => {
   const scrollToUnits = () => {
-    const element = document.getElementById('unit-mobil');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    document.getElementById('unit-mobil')?.scrollIntoView({ behavior: 'smooth' });
+  };
+  const scrollToContact = () => {
+    document.getElementById('kontak')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const scrollToContact = () => {
-    const element = document.getElementById('kontak');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const stats = [
+    { value: '500+', label: 'Pelanggan Puas', icon: Star },
+    { value: '50+', label: 'Unit Armada', icon: Shield },
+    { value: '24/7', label: 'Customer Support', icon: Clock },
+  ];
 
   return (
-    <section
-      id="beranda"
-      className="relative h-screen flex items-center justify-center overflow-hidden"
-    >
-      {/* Background Image with Overlay */}
+    <section id="beranda" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background */}
       <div className="absolute inset-0">
         <img
           src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1920&q=80"
-          alt="Showroom Mobil Premium"
-          className="w-full h-full object-cover"
+          alt="Hero Background"
+          className="w-full h-full object-cover scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/50"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-black/95 via-black/75 to-black/50" />
+        {/* Red accent overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-red-950/30 via-transparent to-transparent" />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      {/* Animated particles */}
+      {[...Array(6)].map((_, i) => (
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          key={i}
+          className="absolute w-1 h-1 bg-red-500/40 rounded-full"
+          style={{
+            left: `${15 + i * 15}%`,
+            top: `${20 + (i % 3) * 25}%`,
+          }}
+          animate={{ y: [-20, 20, -20], opacity: [0.2, 0.8, 0.2] }}
+          transition={{ duration: 3 + i, repeat: Infinity, delay: i * 0.5 }}
+        />
+      ))}
+
+      {/* Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+        {/* Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="inline-flex items-center gap-2 bg-red-600/20 border border-red-500/40 text-red-400 px-5 py-2 rounded-full text-sm font-semibold mb-8 backdrop-blur-sm"
         >
           <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="inline-block px-4 py-2 bg-red-600/20 border border-red-600/50 rounded-full text-red-500 text-sm font-semibold mb-6"
-          >
-            🚗 Rental Mobil Terpercaya Indonesia
-          </motion.span>
+            animate={{ scale: [1, 1.3, 1] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+            className="w-2 h-2 bg-red-500 rounded-full"
+          />
+          🚗 Rental Mobil Terpercaya Indonesia
+        </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-6 leading-tight font-display px-4 sm:px-0"
-          >
-            Rental Mobil Terpercaya <br className="hidden sm:block" />
-            <span className="text-red-600 gradient-text">untuk Perjalanan Anda</span>
-          </motion.h1>
+        {/* Heading */}
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight font-display"
+        >
+          Rental Mobil{' '}
+          <span className="relative inline-block">
+            <span className="gradient-text">Terpercaya</span>
+            <motion.span
+              className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-red-500 to-orange-500"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.8, delay: 1.2 }}
+            />
+          </span>
+          <br />
+          <span className="text-gray-100">untuk Perjalanan Anda</span>
+        </motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.8 }}
-            className="text-base sm:text-lg md:text-xl text-gray-300 mb-10 max-w-3xl mx-auto px-4 sm:px-0"
-          >
-            Sewa mobil dengan armada terbaik, harga terjangkau, dan pelayanan
-            profesional untuk kebutuhan perjalanan pribadi maupun bisnis.
-          </motion.p>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="text-gray-300 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
+        >
+          Sewa mobil dengan armada terbaik, harga terjangkau, dan pelayanan
+          profesional untuk kebutuhan perjalanan pribadi maupun bisnis.
+        </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4 sm:px-0"
+        {/* Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
+        >
+          <motion.button
+            whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(220,38,38,0.5)' }}
+            whileTap={{ scale: 0.97 }}
+            onClick={scrollToUnits}
+            className="group bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-xl font-bold text-base flex items-center gap-3 transition-all duration-300 w-full sm:w-auto justify-center shadow-xl shadow-red-900/40"
           >
-            <button
-              onClick={scrollToUnits}
-              className="group bg-red-600 hover:bg-red-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold text-base sm:text-lg flex items-center space-x-2 transition-all duration-300 shadow-lg hover:shadow-red-600/50 hover-glow w-full sm:w-auto justify-center"
-            >
-              <span>Lihat Armada</span>
-              <ArrowRight
-                className="group-hover:translate-x-2 transition-transform duration-300"
-                size={20}
-              />
-            </button>
+            Lihat Armada
+            <ArrowRight size={20} className="group-hover:translate-x-1.5 transition-transform duration-300" />
+          </motion.button>
 
-            <button
-              onClick={scrollToContact}
-              className="group bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white border-2 border-white/30 px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold text-base sm:text-lg flex items-center space-x-2 transition-all duration-300 hover-scale w-full sm:w-auto justify-center"
-            >
-              <Play size={20} className="group-hover:scale-110 transition-transform duration-300" />
-              <span>Hubungi Admin</span>
-            </button>
-          </motion.div>
+          <motion.button
+            whileHover={{ scale: 1.05, borderColor: 'rgba(255,255,255,0.6)' }}
+            whileTap={{ scale: 0.97 }}
+            onClick={scrollToContact}
+            className="group bg-white/10 hover:bg-white/15 backdrop-blur-sm text-white border border-white/25 px-8 py-4 rounded-xl font-bold text-base flex items-center gap-3 transition-all duration-300 w-full sm:w-auto justify-center"
+          >
+            Hubungi Admin
+          </motion.button>
         </motion.div>
 
         {/* Stats */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.1, duration: 0.8 }}
-          className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 md:gap-8 mt-16 sm:mt-20 max-w-4xl mx-auto px-4 sm:px-0"
+          transition={{ duration: 0.8, delay: 1.0 }}
+          className="grid grid-cols-3 gap-4 max-w-xl mx-auto"
         >
-          <div className="text-center">
-            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white font-display">
-              500+
-            </h3>
-            <p className="text-gray-400 text-xs sm:text-sm md:text-base mt-1">
-              Pelanggan Puas
-            </p>
-          </div>
-          <div className="text-center">
-            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white font-display">
-              50+
-            </h3>
-            <p className="text-gray-400 text-xs sm:text-sm md:text-base mt-1">
-              Unit Kendaraan
-            </p>
-          </div>
-          <div className="text-center">
-            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white font-display">
-              24/7
-            </h3>
-            <p className="text-gray-400 text-xs sm:text-sm md:text-base mt-1">
-              Customer Support
-            </p>
-          </div>
-          <div className="text-center">
-            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white font-display">
-              5+
-            </h3>
-            <p className="text-gray-400 text-xs sm:text-sm md:text-base mt-1">
-              Tahun Pengalaman
-            </p>
-          </div>
+          {stats.map((stat, i) => (
+            <motion.div
+              key={i}
+              whileHover={{ scale: 1.05, y: -4 }}
+              className="text-center bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl px-4 py-4 cursor-default"
+            >
+              <stat.icon size={18} className="text-red-500 mx-auto mb-2" />
+              <p className="text-2xl sm:text-3xl font-bold text-white font-display">{stat.value}</p>
+              <p className="text-gray-400 text-xs mt-1">{stat.label}</p>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
 
-      {/* Scroll Indicator */}
-      <motion.div
+      {/* Scroll indicator */}
+      <motion.button
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 0.8 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        transition={{ delay: 1.5 }}
+        onClick={scrollToUnits}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/50 hover:text-white/80 transition-colors"
       >
-        <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
-          <motion.div
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-            className="w-1.5 h-3 bg-white rounded-full mt-2"
-          />
-        </div>
-      </motion.div>
+        <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 1.8, repeat: Infinity }}>
+          <ChevronDown size={32} />
+        </motion.div>
+      </motion.button>
     </section>
   );
 };
