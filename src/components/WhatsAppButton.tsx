@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 const WhatsAppButton = () => {
   const handleClick = () => {
     const phoneNumber = '6282213840415';
-    const message = 'Halo, saya ingin rental mobil. Mohon informasinya tentang ketersediaan unit dan harga.';
+    const message = 'Halo! Saya tertarik dengan layanan sewa mobil Anda. Mohon info ketersediaan unit dan daftar harga terbaru, ya. Terima kasih banyak!';
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
   };

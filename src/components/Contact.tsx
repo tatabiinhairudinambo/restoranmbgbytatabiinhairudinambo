@@ -1,17 +1,34 @@
 import { useState } from 'react';
 import { Send, Phone, Mail, MapPin, MessageCircle, HeadphonesIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { supabase } from '../lib/supabase';
 import { ContactForm } from '../types';
+import toast from 'react-hot-toast';
 
 const Contact = () => {
   const [formData, setFormData] = useState<ContactForm>({ name: '', phone: '', message: '' });
   const [focused, setFocused] = useState('');
+  const [sending, setSending] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const msg = `Halo, saya ${formData.name}%0A%0ATelepon: ${formData.phone}%0A%0APesan: ${formData.message}`;
-    window.open(`https://wa.me/6282213840415?text=${msg}`, '_blank');
-    setFormData({ name: '', phone: '', message: '' });
+    setSending(true);
+    try {
+      const { error } = await supabase.from('contacts').insert([{
+        name: formData.name,
+        phone: formData.phone,
+        message: formData.message,
+      }]);
+      if (error) throw error;
+      const msg = `Halo, saya ${formData.name}%0A%0ATelepon: ${formData.phone}%0A%0APesan: ${formData.message}`;
+      window.open(`https://wa.me/6282213840415?text=${msg}`, '_blank');
+      setFormData({ name: '', phone: '', message: '' });
+      toast.success('Pesan berhasil dikirim!');
+    } catch {
+      toast.error('Gagal mengirim pesan, silakan coba lagi');
+    } finally {
+      setSending(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -201,12 +218,13 @@ const Contact = () => {
                 {/* Submit */}
                 <motion.button
                   type="submit"
+                  disabled={sending}
                   whileHover={{ scale: 1.02, boxShadow: '0 0 30px rgba(220,38,38,0.35)' }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full bg-red-600 hover:bg-red-700 text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2.5 transition-all duration-300 shadow-lg shadow-red-200 text-sm"
+                  className="w-full bg-red-600 hover:bg-red-700 disabled:opacity-60 text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2.5 transition-all duration-300 shadow-lg shadow-red-200 text-sm"
                 >
                   <Send size={18} className="group-hover:translate-x-1 transition-transform" />
-                  Hubungi Admin Sekarang
+                  {sending ? 'Mengirim...' : 'Hubungi Admin Sekarang'}
                 </motion.button>
               </form>
 

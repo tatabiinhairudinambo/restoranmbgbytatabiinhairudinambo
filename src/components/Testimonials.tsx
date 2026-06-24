@@ -1,16 +1,39 @@
+import { useEffect, useState } from 'react';
 import { Star, Quote, MessageSquare } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { testimonials } from '../data/testimonials';
+import { supabase } from '../lib/supabase';
+import type { Testimonial } from '../types';
+import toast from 'react-hot-toast';
 
 const Testimonials = () => {
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadTestimonials();
+  }, []);
+
+  const loadTestimonials = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('testimonials')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (error) throw error;
+      if (data) setTestimonials(data);
+    } catch {
+      toast.error('Gagal memuat testimoni');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <section id="testimoni" className="py-16 sm:py-20 lg:py-24 bg-white relative overflow-hidden">
-      {/* Background decoration */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-red-50 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl opacity-60" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-orange-50 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl opacity-60" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -34,7 +57,6 @@ const Testimonials = () => {
             Ribuan pelanggan puas telah menemukan mobil impian mereka bersama kami.
           </p>
 
-          {/* Stars row */}
           <div className="flex items-center justify-center gap-1 mt-4">
             {[...Array(5)].map((_, i) => (
               <motion.div
@@ -52,52 +74,52 @@ const Testimonials = () => {
           </div>
         </motion.div>
 
-        {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {testimonials.map((t, i) => (
-            <motion.div
-              key={t.id}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -8, boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}
-              className="bg-gray-50 hover:bg-white p-6 rounded-2xl border border-gray-100 hover:border-red-100 transition-all duration-300 group relative cursor-default"
-            >
-              {/* Quote icon */}
-              <div className="absolute top-5 right-5 text-red-100 group-hover:text-red-200 transition-colors">
-                <Quote size={32} className="fill-current" />
-              </div>
-
-              {/* Stars */}
-              <div className="flex items-center gap-0.5 mb-4">
-                {[...Array(t.rating)].map((_, j) => (
-                  <Star key={j} size={14} className="text-yellow-400 fill-yellow-400" />
-                ))}
-              </div>
-
-              {/* Comment */}
-              <p className="text-gray-600 text-sm leading-relaxed mb-5 line-clamp-4">
-                "{t.comment}"
-              </p>
-
-              {/* Author */}
-              <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
-                <img
-                  src={t.avatar}
-                  alt={t.name}
-                  className="w-10 h-10 rounded-full object-cover ring-2 ring-red-100"
-                />
-                <div>
-                  <h5 className="font-bold text-gray-900 text-sm">{t.name}</h5>
-                  <p className="text-xs text-gray-400">{t.date}</p>
+        {loading ? (
+          <div className="flex justify-center py-16">
+            <div className="animate-spin w-8 h-8 border-2 border-red-600 border-t-transparent rounded-full" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {testimonials.map((t, i) => (
+              <motion.div
+                key={t.id}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -8, boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}
+                className="bg-gray-50 hover:bg-white p-6 rounded-2xl border border-gray-100 hover:border-red-100 transition-all duration-300 group relative cursor-default"
+              >
+                <div className="absolute top-5 right-5 text-red-100 group-hover:text-red-200 transition-colors">
+                  <Quote size={32} className="fill-current" />
                 </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
 
-        {/* CTA */}
+                <div className="flex items-center gap-0.5 mb-4">
+                  {[...Array(t.rating)].map((_, j) => (
+                    <Star key={j} size={14} className="text-yellow-400 fill-yellow-400" />
+                  ))}
+                </div>
+
+                <p className="text-gray-600 text-sm leading-relaxed mb-5 line-clamp-4">
+                  "{t.comment}"
+                </p>
+
+                <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
+                  <img
+                    src={t.avatar}
+                    alt={t.name}
+                    className="w-10 h-10 rounded-full object-cover ring-2 ring-red-100"
+                  />
+                  <div>
+                    <h5 className="font-bold text-gray-900 text-sm">{t.name}</h5>
+                    <p className="text-xs text-gray-400">{t.date}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

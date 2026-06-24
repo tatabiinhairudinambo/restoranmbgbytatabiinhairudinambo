@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const navLinks = [
   { label: 'Beranda', id: 'beranda' },
   { label: 'Tentang', id: 'tentang' },
+  { label: 'Wilayah', id: 'wilayah' },
   { label: 'Armada', id: 'unit-mobil' },
   { label: 'Harga', id: 'harga' },
   { label: 'Testimoni', id: 'testimoni' },

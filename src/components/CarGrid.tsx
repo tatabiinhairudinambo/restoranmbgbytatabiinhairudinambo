@@ -1,12 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Search, SlidersHorizontal, Car } from 'lucide-react';
 import { motion } from 'framer-motion';
 import CarCard from './CarCard';
-import { cars } from '../data/cars';
+import { supabase } from '../lib/supabase';
+import type { Car as CarType } from '../types';
+import toast from 'react-hot-toast';
 
 const CarGrid = () => {
+  const [cars, setCars] = useState<CarType[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedBrand, setSelectedBrand] = useState('all');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadCars();
+  }, []);
+
+  const loadCars = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('cars')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (error) throw error;
+      if (data) setCars(data);
+    } catch {
+      toast.error('Gagal memuat data armada');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const brands = ['all', ...Array.from(new Set(cars.map((car) => car.brand)))];
 
@@ -21,7 +44,6 @@ const CarGrid = () => {
   return (
     <section id="unit-mobil" className="py-16 sm:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -47,7 +69,6 @@ const CarGrid = () => {
           </p>
         </motion.div>
 
-        {/* Filters */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -55,7 +76,6 @@ const CarGrid = () => {
           viewport={{ once: true }}
           className="mb-8 flex flex-col sm:flex-row gap-3"
         >
-          {/* Search */}
           <div className="flex-1 relative">
             <Search
               className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
@@ -70,7 +90,6 @@ const CarGrid = () => {
             />
           </div>
 
-          {/* Brand Filter */}
           <div className="relative sm:w-48">
             <SlidersHorizontal
               className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
@@ -90,41 +109,47 @@ const CarGrid = () => {
           </div>
         </motion.div>
 
-        {/* Results Count */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.4 }}
-          viewport={{ once: true }}
-          className="text-gray-500 text-sm mb-6"
-        >
-          Menampilkan{' '}
-          <span className="font-bold text-gray-900">{filteredCars.length}</span>{' '}
-          kendaraan tersedia
-        </motion.p>
-
-        {/* Car Grid */}
-        {filteredCars.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 items-stretch">
-            {filteredCars.map((car) => (
-              <CarCard key={car.id} car={car} />
-            ))}
+        {loading ? (
+          <div className="flex justify-center py-16">
+            <div className="animate-spin w-8 h-8 border-2 border-red-600 border-t-transparent rounded-full" />
           </div>
         ) : (
-          <div className="text-center py-16">
-            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Search size={24} className="text-gray-400" />
-            </div>
-            <p className="text-gray-500 text-base font-medium">
-              Tidak ada mobil yang sesuai pencarian Anda.
-            </p>
-            <button
-              onClick={() => { setSearchQuery(''); setSelectedBrand('all'); }}
-              className="mt-3 text-red-600 text-sm font-semibold hover:underline"
+          <>
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.4 }}
+              viewport={{ once: true }}
+              className="text-gray-500 text-sm mb-6"
             >
-              Reset filter
-            </button>
-          </div>
+              Menampilkan{' '}
+              <span className="font-bold text-gray-900">{filteredCars.length}</span>{' '}
+              kendaraan tersedia
+            </motion.p>
+
+            {filteredCars.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 items-stretch">
+                {filteredCars.map((car) => (
+                  <CarCard key={car.id} car={car} />
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-16">
+                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Search size={24} className="text-gray-400" />
+                </div>
+                <p className="text-gray-500 text-base font-medium">
+                  Tidak ada mobil yang sesuai pencarian Anda.
+                </p>
+                <button
+                  onClick={() => { setSearchQuery(''); setSelectedBrand('all'); }}
+                  className="mt-3 text-red-600 text-sm font-semibold hover:underline"
+                >
+                  Reset filter
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </section>
