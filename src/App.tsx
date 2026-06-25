@@ -17,6 +17,7 @@ import AdminLogin from './pages/admin/Login';
 import AdminDashboard from './pages/admin/Dashboard';
 import CarsList from './pages/admin/CarsList';
 import CarForm from './pages/admin/CarForm';
+import Prices from './pages/admin/Prices';
 import TestimonialsList from './pages/admin/TestimonialsList';
 import AdminContacts from './pages/admin/Contacts';
 import AdminLayout from './components/admin/AdminLayout';
@@ -63,6 +64,7 @@ function App() {
           <Route path="cars" element={<CarsList />} />
           <Route path="cars/new" element={<CarForm />} />
           <Route path="cars/:id/edit" element={<CarForm />} />
+          <Route path="prices" element={<Prices />} />
           <Route path="testimonials" element={<TestimonialsList />} />
           <Route path="contacts" element={<AdminContacts />} />
         </Route>
