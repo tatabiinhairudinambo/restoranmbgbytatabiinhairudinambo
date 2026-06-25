@@ -62,8 +62,8 @@ export default function AdminContacts() {
   return (
     <div>
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 font-display">Pesan Masuk</h2>
-        <p className="text-gray-500 text-sm">
+        <h2 className="text-xl lg:text-2xl font-bold text-gray-900 font-display">Pesan Masuk</h2>
+        <p className="text-gray-500 text-xs lg:text-sm">
           {contacts.length} pesan{unread > 0 && `, ${unread} belum dibaca`}
         </p>
       </div>
@@ -74,36 +74,36 @@ export default function AdminContacts() {
           <p className="text-gray-500 font-medium">Belum ada pesan masuk</p>
         </div>
       ) : (
-        <div className="grid lg:grid-cols-2 gap-6">
+        <div className="grid lg:grid-cols-2 gap-4 lg:gap-6">
           {/* List */}
-          <div className="space-y-3">
+          <div className="space-y-2 lg:space-y-3">
             {contacts.map((c) => (
               <button
                 key={c.id}
                 onClick={() => { setSelected(c); if (!c.is_read) markAsRead(c.id); }}
-                className={`w-full text-left bg-white rounded-2xl border p-4 shadow-sm hover:shadow-md transition-all ${
+                className={`w-full text-left bg-white rounded-2xl border p-3 lg:p-4 shadow-sm hover:shadow-md transition-all ${
                   selected?.id === c.id ? 'border-red-200 ring-2 ring-red-100' : 'border-gray-100'
                 } ${!c.is_read ? 'border-l-4 border-l-red-500' : ''}`}
               >
-                <div className="flex items-center justify-between mb-1">
-                  <h3 className={`text-sm ${!c.is_read ? 'font-bold text-gray-900' : 'font-medium text-gray-700'}`}>
+                <div className="flex items-center justify-between mb-0.5 lg:mb-1">
+                  <h3 className={`text-xs lg:text-sm ${!c.is_read ? 'font-bold text-gray-900' : 'font-medium text-gray-700'}`}>
                     {c.name}
                   </h3>
-                  <span className="text-[10px] text-gray-400">
+                  <span className="text-[9px] lg:text-[10px] text-gray-400 flex-shrink-0 ml-2">
                     {new Date(c.created_at).toLocaleDateString('id-ID')}
                   </span>
                 </div>
-                <p className="text-xs text-gray-500 truncate">{c.message}</p>
-                <div className="flex items-center gap-1 mt-2">
-                  <Phone size={11} className="text-gray-400" />
-                  <span className="text-[11px] text-gray-400">{c.phone}</span>
+                <p className="text-[11px] lg:text-xs text-gray-500 truncate">{c.message}</p>
+                <div className="flex items-center gap-1 mt-1.5 lg:mt-2">
+                  <Phone size={10} className="lg:size-[11px] text-gray-400" />
+                  <span className="text-[10px] lg:text-[11px] text-gray-400">{c.phone}</span>
                 </div>
               </button>
             ))}
           </div>
 
           {/* Detail */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+          <div className="bg-white rounded-2xl border border-gray-100 p-4 lg:p-6 shadow-sm">
             {selected ? (
               <div>
                 <div className="flex items-center justify-between mb-4">

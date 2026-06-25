@@ -128,18 +128,18 @@ export default function CarForm() {
         Kembali
       </button>
 
-      <div className="max-w-2xl">
-        <h2 className="text-2xl font-bold text-gray-900 font-display mb-6">
+      <div className="max-w-2xl mx-auto">
+        <h2 className="text-xl lg:text-2xl font-bold text-gray-900 font-display mb-4 lg:mb-6">
           {isEdit ? 'Edit Mobil' : 'Tambah Mobil Baru'}
         </h2>
 
-        <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm space-y-5">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="col-span-2 sm:col-span-1">
+        <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-100 p-4 lg:p-6 shadow-sm space-y-4 lg:space-y-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:gap-4">
+            <div className="sm:col-span-1">
               <label className={labelClass}>Nama Mobil</label>
               <input name="name" value={form.name} onChange={handleChange} required className={inputClass} placeholder="Contoh: Toyota Avanza" />
             </div>
-            <div className="col-span-2 sm:col-span-1">
+            <div className="sm:col-span-1">
               <label className={labelClass}>Merek</label>
               <select name="brand" value={form.brand} onChange={handleChange} className={inputClass}>
                 {brands.map((b) => <option key={b} value={b}>{b}</option>)}
@@ -163,24 +163,24 @@ export default function CarForm() {
               <label className={labelClass}>Penumpang</label>
               <input type="number" name="passengers" value={form.passengers} onChange={handleChange} required className={inputClass} />
             </div>
-            <div className="col-span-2 sm:col-span-1">
+            <div>
               <label className={labelClass}>Harga / Hari (Rp)</label>
               <input type="number" name="price" value={form.price} onChange={handleChange} required className={inputClass} />
             </div>
-            <div className="col-span-2 sm:col-span-1">
+            <div>
               <label className={labelClass}>Kondisi</label>
               <select name="condition" value={form.condition} onChange={handleChange} className={inputClass}>
                 {conditions.map((c) => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
-            <div className="col-span-2">
+            <div className="sm:col-span-2">
               <label className={labelClass}>URL Gambar</label>
               <input name="image" value={form.image} onChange={handleChange} required className={inputClass} placeholder="https://upload.wikimedia.org/..." />
               {form.image && (
-                <img src={form.image} alt="Preview" className="mt-2 h-24 w-40 object-cover rounded-xl border border-gray-100" />
+                <img src={form.image} alt="Preview" className="mt-2 h-20 sm:h-24 w-full sm:w-40 object-cover rounded-xl border border-gray-100" />
               )}
             </div>
-            <div className="col-span-2">
+            <div className="sm:col-span-2">
               <label className={labelClass}>Fitur (1 baris per fitur)</label>
               <textarea
                 name="features"
@@ -191,7 +191,7 @@ export default function CarForm() {
                 placeholder="AC Dingin&#10;7 Penumpang&#10;BBM Irit"
               />
             </div>
-            <div className="col-span-2">
+            <div className="sm:col-span-2">
               <label className="flex items-center gap-3 cursor-pointer">
                 <input type="checkbox" name="featured" checked={form.featured} onChange={handleChange} className="w-4 h-4 text-red-600 rounded border-gray-300 focus:ring-red-500" />
                 <span className="text-sm font-medium text-gray-700">Tandai sebagai Populer</span>
@@ -203,14 +203,14 @@ export default function CarForm() {
             <button
               type="button"
               onClick={() => navigate('/admin/cars')}
-              className="px-6 py-3 border border-gray-200 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 transition-all"
+              className="flex-1 sm:flex-none px-6 py-3 border border-gray-200 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50 transition-all"
             >
               Batal
             </button>
             <button
               type="submit"
               disabled={saving}
-              className="px-6 py-3 bg-red-600 hover:bg-red-700 disabled:opacity-60 text-white rounded-xl text-sm font-bold flex items-center gap-2 transition-all"
+              className="flex-1 sm:flex-none px-6 py-3 bg-red-600 hover:bg-red-700 disabled:opacity-60 text-white rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all"
             >
               {saving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
               {saving ? 'Menyimpan...' : 'Simpan'}

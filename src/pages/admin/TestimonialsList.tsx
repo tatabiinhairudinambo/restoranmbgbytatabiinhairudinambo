@@ -60,14 +60,14 @@ export default function TestimonialsList() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900 font-display">Testimoni</h2>
-          <p className="text-gray-500 text-sm">{items.length} testimoni</p>
+          <h2 className="text-xl lg:text-2xl font-bold text-gray-900 font-display">Testimoni</h2>
+          <p className="text-gray-500 text-xs lg:text-sm">{items.length} testimoni</p>
         </div>
         <button
           onClick={() => setShowForm(true)}
-          className="bg-red-600 hover:bg-red-700 text-white px-4 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all"
+          className="bg-red-600 hover:bg-red-700 text-white px-4 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all w-full sm:w-auto justify-center"
         >
           <Plus size={16} />
           Tambah Testimoni
@@ -88,32 +88,32 @@ export default function TestimonialsList() {
       ) : (
         <div className="grid gap-4">
           {items.map((t) => (
-            <div key={t.id} className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm flex items-center gap-4">
-              <img src={t.avatar} alt={t.name} className="w-12 h-12 rounded-full object-cover ring-2 ring-red-100 flex-shrink-0" />
+            <div key={t.id} className="bg-white rounded-2xl border border-gray-100 p-3 lg:p-4 shadow-sm flex items-center gap-3 lg:gap-4">
+              <img src={t.avatar} alt={t.name} className="w-10 h-10 lg:w-12 lg:h-12 rounded-full object-cover ring-2 ring-red-100 flex-shrink-0" />
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
-                  <h3 className="font-bold text-gray-900">{t.name}</h3>
-                  <div className="flex items-center gap-0.5">
+                <div className="flex items-center gap-1.5 lg:gap-2 mb-0.5 lg:mb-1">
+                  <h3 className="font-bold text-gray-900 text-sm lg:text-base">{t.name}</h3>
+                  <div className="flex items-center gap-0.5 flex-shrink-0">
                     {[...Array(t.rating)].map((_, j) => (
-                      <Star key={j} size={12} className="text-yellow-400 fill-yellow-400" />
+                      <Star key={j} size={10} className="lg:size-3 text-yellow-400 fill-yellow-400" />
                     ))}
                   </div>
                 </div>
-                <p className="text-sm text-gray-600 truncate">"{t.comment}"</p>
-                <p className="text-xs text-gray-400 mt-1">{t.date}</p>
+                <p className="text-xs lg:text-sm text-gray-600 truncate">"{t.comment}"</p>
+                <p className="text-[10px] lg:text-xs text-gray-400 mt-0.5 lg:mt-1">{t.date}</p>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 lg:gap-2 flex-shrink-0">
                 <button
                   onClick={() => { setEditId(t.id); setShowForm(true); }}
-                  className="w-9 h-9 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center hover:bg-blue-100"
+                  className="w-8 h-8 lg:w-9 lg:h-9 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center hover:bg-blue-100"
                 >
-                  <Edit2 size={15} />
+                  <Edit2 size={13} className="lg:size-[15px]" />
                 </button>
                 <button
                   onClick={() => setDeleteId(t.id)}
-                  className="w-9 h-9 bg-red-50 text-red-600 rounded-xl flex items-center justify-center hover:bg-red-100"
+                  className="w-8 h-8 lg:w-9 lg:h-9 bg-red-50 text-red-600 rounded-xl flex items-center justify-center hover:bg-red-100"
                 >
-                  <Trash2 size={15} />
+                  <Trash2 size={13} className="lg:size-[15px]" />
                 </button>
               </div>
             </div>

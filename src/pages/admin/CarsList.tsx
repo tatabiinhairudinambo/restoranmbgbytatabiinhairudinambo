@@ -69,14 +69,14 @@ export default function CarsList() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900 font-display">Kelola Mobil</h2>
-          <p className="text-gray-500 text-sm">{cars.length} armada terdaftar</p>
+          <h2 className="text-xl lg:text-2xl font-bold text-gray-900 font-display">Kelola Mobil</h2>
+          <p className="text-gray-500 text-xs lg:text-sm">{cars.length} armada terdaftar</p>
         </div>
         <Link
           to="/admin/cars/new"
-          className="bg-red-600 hover:bg-red-700 text-white px-4 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all"
+          className="bg-red-600 hover:bg-red-700 text-white px-4 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all w-full sm:w-auto justify-center"
         >
           <Plus size={16} />
           Tambah Mobil
@@ -108,35 +108,35 @@ export default function CarsList() {
       ) : (
         <div className="grid gap-4">
           {filtered.map((car) => (
-            <div key={car.id} className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm flex items-center gap-4">
-              <img src={car.image} alt={car.name} className="w-20 h-16 object-cover rounded-xl flex-shrink-0" />
+            <div key={car.id} className="bg-white rounded-2xl border border-gray-100 p-3 lg:p-4 shadow-sm flex items-center gap-3 lg:gap-4">
+              <img src={car.image} alt={car.name} className="w-16 h-12 lg:w-20 lg:h-16 object-cover rounded-xl flex-shrink-0" />
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
-                  <h3 className="font-bold text-gray-900 truncate">{car.name}</h3>
-                  {car.featured && <span className="bg-red-100 text-red-600 text-[10px] font-bold px-2 py-0.5 rounded-full">Populer</span>}
+                <div className="flex items-center gap-1.5 lg:gap-2 mb-1">
+                  <h3 className="font-bold text-gray-900 text-sm lg:text-base truncate">{car.name}</h3>
+                  {car.featured && <span className="bg-red-100 text-red-600 text-[9px] lg:text-[10px] font-bold px-1.5 lg:px-2 py-0.5 rounded-full flex-shrink-0">Populer</span>}
                 </div>
-                <div className="flex items-center gap-3 text-xs text-gray-500">
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] lg:text-xs text-gray-500">
                   <span>{car.brand} {car.year}</span>
                   <span className="w-px h-3 bg-gray-200" />
                   <span>{car.transmission}</span>
                   <span className="w-px h-3 bg-gray-200" />
-                  <span>{car.passengers} penumpang</span>
+                  <span>{car.passengers} pnp</span>
                   <span className="w-px h-3 bg-gray-200" />
                   <span className="font-semibold text-red-600">{formatPrice(car.price)}/hari</span>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 lg:gap-2 flex-shrink-0">
                 <Link
                   to={`/admin/cars/${car.id}/edit`}
-                  className="w-9 h-9 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center hover:bg-blue-100 transition-all"
+                  className="w-8 h-8 lg:w-9 lg:h-9 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center hover:bg-blue-100 transition-all"
                 >
-                  <Edit2 size={15} />
+                  <Edit2 size={13} className="lg:size-[15px]" />
                 </Link>
                 <button
                   onClick={() => setDeleteId(car.id)}
-                  className="w-9 h-9 bg-red-50 text-red-600 rounded-xl flex items-center justify-center hover:bg-red-100 transition-all"
+                  className="w-8 h-8 lg:w-9 lg:h-9 bg-red-50 text-red-600 rounded-xl flex items-center justify-center hover:bg-red-100 transition-all"
                 >
-                  <Trash2 size={15} />
+                  <Trash2 size={13} className="lg:size-[15px]" />
                 </button>
               </div>
             </div>

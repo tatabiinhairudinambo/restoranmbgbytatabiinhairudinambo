@@ -117,8 +117,8 @@ export default function AdminDashboard() {
   return (
     <div>
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 font-display">Dashboard</h2>
-        <p className="text-gray-500 text-sm">Overview data armada rental Anda</p>
+        <h2 className="text-xl lg:text-2xl font-bold text-gray-900 font-display">Dashboard</h2>
+        <p className="text-gray-500 text-xs lg:text-sm">Overview data armada rental Anda</p>
       </div>
 
       {/* Stats cards */}

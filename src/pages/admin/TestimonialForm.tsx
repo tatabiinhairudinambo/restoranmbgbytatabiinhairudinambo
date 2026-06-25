@@ -62,20 +62,20 @@ export default function TestimonialForm({ editId, onSaved, onCancel }: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm space-y-4">
-      <h3 className="font-bold text-gray-900">{editId ? 'Edit Testimoni' : 'Tambah Testimoni Baru'}</h3>
-      <div className="grid grid-cols-2 gap-4">
-        <div className="col-span-2 sm:col-span-1">
+    <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-100 p-4 lg:p-6 shadow-sm space-y-4">
+      <h3 className="font-bold text-gray-900 text-sm lg:text-base">{editId ? 'Edit Testimoni' : 'Tambah Testimoni Baru'}</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:gap-4">
+        <div>
           <label className={labelClass}>Nama</label>
           <input value={name} onChange={(e) => setName(e.target.value)} required className={inputClass} />
         </div>
-        <div className="col-span-2 sm:col-span-1">
+        <div>
           <label className={labelClass}>Rating (1-5)</label>
           <select value={rating} onChange={(e) => setRating(Number(e.target.value))} className={inputClass}>
             {[5, 4, 3, 2, 1].map((r) => <option key={r} value={r}>{r} Bintang</option>)}
           </select>
         </div>
-        <div className="col-span-2">
+        <div className="sm:col-span-2">
           <label className={labelClass}>Komentar</label>
           <textarea value={comment} onChange={(e) => setComment(e.target.value)} required rows={3} className={inputClass} />
         </div>
@@ -89,8 +89,8 @@ export default function TestimonialForm({ editId, onSaved, onCancel }: Props) {
         </div>
       </div>
       <div className="flex gap-3 pt-2">
-        <button type="button" onClick={onCancel} className="px-5 py-2.5 border border-gray-200 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">Batal</button>
-        <button type="submit" disabled={saving} className="px-5 py-2.5 bg-red-600 hover:bg-red-700 disabled:opacity-60 text-white rounded-xl text-sm font-bold flex items-center gap-2 transition-all">
+        <button type="button" onClick={onCancel} className="flex-1 sm:flex-none px-5 py-2.5 border border-gray-200 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">Batal</button>
+        <button type="submit" disabled={saving} className="flex-1 sm:flex-none px-5 py-2.5 bg-red-600 hover:bg-red-700 disabled:opacity-60 text-white rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all">
           {saving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
           {saving ? 'Menyimpan...' : 'Simpan'}
         </button>

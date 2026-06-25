@@ -63,7 +63,8 @@ export default function Sidebar({ onLogout }: SidebarProps) {
       {/* Mobile toggle */}
       <button
         onClick={() => setMobileOpen(!mobileOpen)}
-        className="fixed top-4 left-4 z-50 lg:hidden bg-gray-950 text-white p-2.5 rounded-xl shadow-lg"
+        className="fixed top-3 left-3 z-50 lg:hidden bg-gray-950 text-white p-2.5 rounded-xl shadow-lg hover:bg-gray-800 transition-all"
+        aria-label="Toggle menu"
       >
         {mobileOpen ? <X size={20} /> : <Menu size={20} />}
       </button>
@@ -74,14 +75,25 @@ export default function Sidebar({ onLogout }: SidebarProps) {
       </aside>
 
       {/* Mobile sidebar overlay */}
-      {mobileOpen && (
-        <div className="fixed inset-0 z-40 lg:hidden">
-          <div className="absolute inset-0 bg-black/60" onClick={() => setMobileOpen(false)} />
-          <aside className="relative w-64 h-full bg-gray-950 border-r border-gray-800">
-            {content}
-          </aside>
-        </div>
-      )}
+      <div
+        className={`fixed inset-0 z-40 lg:hidden transition-all duration-300 ${
+          mobileOpen ? 'visible' : 'invisible'
+        }`}
+      >
+        <div
+          className={`absolute inset-0 bg-black/60 transition-opacity duration-300 ${
+            mobileOpen ? 'opacity-100' : 'opacity-0'
+          }`}
+          onClick={() => setMobileOpen(false)}
+        />
+        <aside
+          className={`relative w-64 h-full bg-gray-950 border-r border-gray-800 transition-transform duration-300 ${
+            mobileOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
+        >
+          {content}
+        </aside>
+      </div>
     </>
   );
 }

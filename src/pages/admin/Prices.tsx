@@ -74,46 +74,46 @@ export default function Prices() {
           <p className="text-gray-500 font-medium">Belum ada data armada</p>
         </div>
       ) : (
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-          <table className="w-full">
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-x-auto">
+          <table className="w-full min-w-[640px]">
             <thead>
               <tr className="bg-gray-50 border-b border-gray-100">
-                <th className="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">#</th>
-                <th className="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">Mobil</th>
-                <th className="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">Merek</th>
-                <th className="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">Tahun</th>
-                <th className="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-500">Transmisi</th>
-                <th className="px-5 py-3 text-right text-xs font-bold uppercase tracking-wider text-gray-500">Harga/Hari</th>
-                <th className="px-5 py-3 text-center text-xs font-bold uppercase tracking-wider text-gray-500">Aksi</th>
+                <th className="px-3 lg:px-5 py-3 text-left text-[10px] lg:text-xs font-bold uppercase tracking-wider text-gray-500">#</th>
+                <th className="px-3 lg:px-5 py-3 text-left text-[10px] lg:text-xs font-bold uppercase tracking-wider text-gray-500">Mobil</th>
+                <th className="px-3 lg:px-5 py-3 text-left text-[10px] lg:text-xs font-bold uppercase tracking-wider text-gray-500">Merek</th>
+                <th className="px-3 lg:px-5 py-3 text-left text-[10px] lg:text-xs font-bold uppercase tracking-wider text-gray-500">Tahun</th>
+                <th className="hidden sm:table-cell px-3 lg:px-5 py-3 text-left text-[10px] lg:text-xs font-bold uppercase tracking-wider text-gray-500">Transmisi</th>
+                <th className="px-3 lg:px-5 py-3 text-right text-[10px] lg:text-xs font-bold uppercase tracking-wider text-gray-500">Harga/Hari</th>
+                <th className="px-3 lg:px-5 py-3 text-center text-[10px] lg:text-xs font-bold uppercase tracking-wider text-gray-500">Aksi</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
               {filtered.map((car, i) => (
                 <tr key={car.id} className="hover:bg-gray-50/80 transition-colors">
-                  <td className="px-5 py-4 text-gray-400 text-sm font-mono">{String(i + 1).padStart(2, '0')}</td>
-                  <td className="px-5 py-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-9 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100">
+                  <td className="px-3 lg:px-5 py-3 lg:py-4 text-gray-400 text-xs lg:text-sm font-mono">{String(i + 1).padStart(2, '0')}</td>
+                  <td className="px-3 lg:px-5 py-3 lg:py-4">
+                    <div className="flex items-center gap-2 lg:gap-3">
+                      <div className="w-10 h-8 lg:w-12 lg:h-9 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100">
                         <img src={car.image} alt={car.name} className="w-full h-full object-cover" />
                       </div>
-                      <span className="font-semibold text-gray-900 text-sm">{car.name}</span>
+                      <span className="font-semibold text-gray-900 text-xs lg:text-sm truncate max-w-[100px] lg:max-w-none">{car.name}</span>
                     </div>
                   </td>
-                  <td className="px-5 py-4 text-gray-600 text-sm">{car.brand}</td>
-                  <td className="px-5 py-4 text-gray-600 text-sm">{car.year}</td>
-                  <td className="px-5 py-4">
-                    <span className="px-2.5 py-1 bg-gray-100 text-gray-600 rounded-lg text-xs font-medium">{car.transmission}</span>
+                  <td className="px-3 lg:px-5 py-3 lg:py-4 text-gray-600 text-xs lg:text-sm">{car.brand}</td>
+                  <td className="px-3 lg:px-5 py-3 lg:py-4 text-gray-600 text-xs lg:text-sm">{car.year}</td>
+                  <td className="hidden sm:table-cell px-3 lg:px-5 py-3 lg:py-4">
+                    <span className="px-2 lg:px-2.5 py-0.5 lg:py-1 bg-gray-100 text-gray-600 rounded-lg text-[10px] lg:text-xs font-medium">{car.transmission}</span>
                   </td>
-                  <td className="px-5 py-4 text-right">
-                    <span className="text-lg font-bold text-red-600 font-display">{formatPrice(car.price)}</span>
+                  <td className="px-3 lg:px-5 py-3 lg:py-4 text-right">
+                    <span className="text-sm lg:text-lg font-bold text-red-600 font-display whitespace-nowrap">{formatPrice(car.price)}</span>
                   </td>
-                  <td className="px-5 py-4 text-center">
+                  <td className="px-3 lg:px-5 py-3 lg:py-4 text-center">
                     <Link
                       to={`/admin/cars/${car.id}/edit`}
-                      className="inline-flex items-center gap-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 px-3 py-1.5 rounded-lg text-xs font-bold transition-colors"
+                      className="inline-flex items-center gap-1 bg-blue-50 text-blue-600 hover:bg-blue-100 px-2 lg:px-3 py-1.5 rounded-lg text-[10px] lg:text-xs font-bold transition-colors"
                     >
-                      <Edit2 size={13} />
-                      Edit
+                      <Edit2 size={11} className="lg:size-[13px]" />
+                      <span className="hidden xs:inline">Edit</span>
                     </Link>
                   </td>
                 </tr>
