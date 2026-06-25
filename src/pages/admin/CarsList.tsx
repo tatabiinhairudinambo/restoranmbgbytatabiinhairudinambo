@@ -30,8 +30,8 @@ export default function CarsList() {
     try {
       const { data } = await supabase.from('cars').select('*').order('created_at', { ascending: false });
       if (data) setCars(data);
-    } catch {
-      toast.error('Gagal memuat data');
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : 'Gagal memuat data');
     } finally {
       setLoading(false);
     }
@@ -44,8 +44,8 @@ export default function CarsList() {
       if (error) throw error;
       setCars((prev) => prev.filter((c) => c.id !== id));
       toast.success('Mobil berhasil dihapus');
-    } catch {
-      toast.error('Gagal menghapus');
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : 'Gagal menghapus');
     } finally {
       setDeleting(false);
       setDeleteId(null);

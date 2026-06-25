@@ -66,18 +66,33 @@ ALTER TABLE bookings ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Allow public read cars" ON cars FOR SELECT USING (true);
 CREATE POLICY "Allow public read testimonials" ON testimonials FOR SELECT USING (true);
 
--- Authenticated admin policies for cars
-CREATE POLICY "Allow admin all cars" ON cars FOR ALL USING (auth.role() = 'authenticated');
+-- Authenticated admin policies for cars (full access)
+DROP POLICY IF EXISTS "Allow admin all cars" ON cars;
+CREATE POLICY "Allow admin select cars" ON cars FOR SELECT USING (auth.role() = 'authenticated');
+CREATE POLICY "Allow admin insert cars" ON cars FOR INSERT WITH CHECK (auth.role() = 'authenticated');
+CREATE POLICY "Allow admin update cars" ON cars FOR UPDATE USING (auth.role() = 'authenticated') WITH CHECK (auth.role() = 'authenticated');
+CREATE POLICY "Allow admin delete cars" ON cars FOR DELETE USING (auth.role() = 'authenticated');
 
 -- Authenticated admin policies for testimonials
-CREATE POLICY "Allow admin all testimonials" ON testimonials FOR ALL USING (auth.role() = 'authenticated');
+DROP POLICY IF EXISTS "Allow admin all testimonials" ON testimonials;
+CREATE POLICY "Allow admin select testimonials" ON testimonials FOR SELECT USING (auth.role() = 'authenticated');
+CREATE POLICY "Allow admin insert testimonials" ON testimonials FOR INSERT WITH CHECK (auth.role() = 'authenticated');
+CREATE POLICY "Allow admin update testimonials" ON testimonials FOR UPDATE USING (auth.role() = 'authenticated') WITH CHECK (auth.role() = 'authenticated');
+CREATE POLICY "Allow admin delete testimonials" ON testimonials FOR DELETE USING (auth.role() = 'authenticated');
 
 -- Authenticated admin policies for contacts
-CREATE POLICY "Allow admin all contacts" ON contacts FOR ALL USING (auth.role() = 'authenticated');
+DROP POLICY IF EXISTS "Allow admin all contacts" ON contacts;
+CREATE POLICY "Allow admin select contacts" ON contacts FOR SELECT USING (auth.role() = 'authenticated');
+CREATE POLICY "Allow admin update contacts" ON contacts FOR UPDATE USING (auth.role() = 'authenticated') WITH CHECK (auth.role() = 'authenticated');
+CREATE POLICY "Allow admin delete contacts" ON contacts FOR DELETE USING (auth.role() = 'authenticated');
 CREATE POLICY "Allow public insert contacts" ON contacts FOR INSERT WITH CHECK (true);
 
 -- Authenticated admin policies for bookings
-CREATE POLICY "Allow admin all bookings" ON bookings FOR ALL USING (auth.role() = 'authenticated');
+DROP POLICY IF EXISTS "Allow admin all bookings" ON bookings;
+CREATE POLICY "Allow admin select bookings" ON bookings FOR SELECT USING (auth.role() = 'authenticated');
+CREATE POLICY "Allow admin insert bookings" ON bookings FOR INSERT WITH CHECK (auth.role() = 'authenticated');
+CREATE POLICY "Allow admin update bookings" ON bookings FOR UPDATE USING (auth.role() = 'authenticated') WITH CHECK (auth.role() = 'authenticated');
+CREATE POLICY "Allow admin delete bookings" ON bookings FOR DELETE USING (auth.role() = 'authenticated');
 
 -- Auto-update updated_at trigger
 CREATE OR REPLACE FUNCTION update_updated_at_column()
@@ -88,6 +103,7 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
+DROP TRIGGER IF EXISTS update_cars_updated_at ON cars;
 CREATE TRIGGER update_cars_updated_at
   BEFORE UPDATE ON cars
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();

@@ -102,8 +102,9 @@ export default function CarForm() {
         toast.success('Mobil berhasil ditambahkan');
       }
       navigate('/admin/cars');
-    } catch {
-      toast.error('Gagal menyimpan data');
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Gagal menyimpan data';
+      toast.error(msg);
     } finally {
       setSaving(false);
     }
@@ -174,7 +175,7 @@ export default function CarForm() {
             </div>
             <div className="col-span-2">
               <label className={labelClass}>URL Gambar</label>
-              <input name="image" value={form.image} onChange={handleChange} className={inputClass} placeholder="https://..." />
+              <input name="image" value={form.image} onChange={handleChange} required className={inputClass} placeholder="https://upload.wikimedia.org/..." />
               {form.image && (
                 <img src={form.image} alt="Preview" className="mt-2 h-24 w-40 object-cover rounded-xl border border-gray-100" />
               )}

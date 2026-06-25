@@ -41,6 +41,7 @@ export default function AdminDashboard() {
   });
   const [loading, setLoading] = useState(true);
   const [seeding, setSeeding] = useState(false);
+  const [connectionOk, setConnectionOk] = useState<boolean | null>(null);
   const [brandData, setBrandData] = useState<{ brand: string; count: number }[]>([]);
 
   useEffect(() => {
@@ -70,8 +71,9 @@ export default function AdminDashboard() {
         cars.forEach((c) => { brandCounts[c.brand] = (brandCounts[c.brand] || 0) + 1; });
         setBrandData(Object.entries(brandCounts).map(([brand, count]) => ({ brand, count })));
       }
+      setConnectionOk(true);
     } catch {
-      // Tables may not exist yet
+      setConnectionOk(false);
     } finally {
       setLoading(false);
     }
@@ -153,7 +155,19 @@ export default function AdminDashboard() {
         </div>
       )}
 
-      {stats.totalCars === 0 && (
+      {connectionOk === false && (
+        <div className="bg-red-50 border border-red-100 rounded-2xl p-6 mt-6 text-center">
+          <AlertCircle size={32} className="text-red-500 mx-auto mb-3" />
+          <p className="text-red-800 text-sm font-medium mb-2">
+            Gagal terhubung ke Supabase!
+          </p>
+          <p className="text-red-600 text-xs">
+            Pastikan tabel sudah dibuat (jalankan SQL migration di Supabase dashboard) dan environment variable VITE_SUPABASE_URL & VITE_SUPABASE_ANON_KEY sudah benar.
+          </p>
+        </div>
+      )}
+
+      {connectionOk === true && stats.totalCars === 0 && (
         <div className="bg-yellow-50 border border-yellow-100 rounded-2xl p-6 mt-6 text-center">
           <Database size={32} className="text-yellow-500 mx-auto mb-3" />
           <p className="text-yellow-800 text-sm font-medium mb-4">
