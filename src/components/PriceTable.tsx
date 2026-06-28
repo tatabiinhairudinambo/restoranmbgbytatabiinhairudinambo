@@ -141,7 +141,7 @@ const PriceTable = () => {
                           className="inline-flex items-center gap-1.5 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-bold text-xs transition-colors duration-200"
                         >
                           <MessageCircle size={13} />
-                          Sewa
+                          Pesan Sekarang
                         </motion.button>
                       </td>
                     </motion.tr>
@@ -189,7 +189,7 @@ const PriceTable = () => {
                       className="inline-flex items-center gap-1.5 bg-red-600 hover:bg-red-700 text-white px-4 py-2.5 rounded-xl font-bold text-xs transition-colors"
                     >
                       <MessageCircle size={14} />
-                      Sewa
+                      Pesan Sekarang
                     </motion.button>
                   </div>
                 </motion.div>
